@@ -39,6 +39,7 @@ devtools::build_vignettes()
 
 ## 3.2 Code coverage
 ## You'll need GitHub there
+options(usethis.protocol = "https")
 usethis::use_github()
 usethis::use_travis()
 usethis::use_appveyor()
