@@ -13,6 +13,9 @@ golem::add_module( name = "my_other_module" ) # Name of the module
 ## 2.2 Add dependencies
 
 usethis::use_package( "thinkr" ) # To call each time you need a new package
+usethis::use_package( "ggplot2" )
+usethis::use_package( "magrittr" )
+usethis::use_package( "dplyr" )
 
 ## 2.3 Add tests
 

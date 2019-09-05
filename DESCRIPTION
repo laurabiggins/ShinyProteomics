@@ -3,14 +3,25 @@ Title: ShinyProteomics
 Version: 0.0.0.9000
 Authors@R: person('Laura', 'Biggins', email = 'laura.biggins@babraham.ac.uk', role = c('cre', 'aut'))
 Description: Plasma membrane profiling identifies differences in cell surface protein expression
- between naïve and primed human pluripotent stem cells
+ between naïve and primed human pluripotent stem cells.
+ Data from paper.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
     shiny,
     golem,
-    processx
+    processx,
+    attempt,
+    DT,
+    glue,
+    htmltools,
+    ggplot2,
+    magrittr,
+    dplyr
 RoxygenNote: 6.1.0
 Suggests: 
-    testthat
+    testthat (>= 2.1.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
