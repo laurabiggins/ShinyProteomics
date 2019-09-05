@@ -25,3 +25,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/laurabiggins/ShinyProteomics
+BugReports: https://github.com/laurabiggins/ShinyProteomics/issues
