@@ -143,8 +143,41 @@ app_server <- function(input, output,session) {
        p <- custom_bar_plot(Wojdyla_data_tidy, highlightedGene()[1])
        ggsave(filename, p, device = "png")#, units = "in")
       }  
-      
-      
     }) 
     
+    customDownloadHandler <- function(n=1){
+     # if(length(highlightedGene()) < n) return (NULL)
+      downloadHandler(
+        filename = function() {
+          paste0(highlightedGene()[n], ".png")
+        },
+        content = function(file) {
+          p <- custom_bar_plot(Wojdyla_data_tidy, highlightedGene()[n])
+          ggsave(file, p, device = "png")
+        }
+      )
+    }
+    output$downloadPlot1 <- customDownloadHandler(1)
+    output$downloadPlot2 <- customDownloadHandler(2) 
+    output$downloadPlot3 <- customDownloadHandler(3) 
+    output$downloadPlot4 <- customDownloadHandler(4) 
+    
+    # downloadHandler() takes two arguments, both functions.
+    # The content function is passed a filename as an argument, and
+    #   it should write out data to that filename.
+    # output$downloadPlot2 <- downloadHandler(
+    # # if(length(highlightedGene()) >= 2){
+    #     filename = function() {
+    #       paste0(highlightedGene()[2], ".png")
+    #     },
+    #     content = function(file) {
+    #       p <- custom_bar_plot(Wojdyla_data_tidy, highlightedGene()[2])
+    #       ggsave(file, p, device = "png")
+    #     }
+    # # }
+    # )
 }
+
+
+
+

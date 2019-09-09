@@ -55,8 +55,14 @@ between naïve and primed human pluripotent stem cells"),
       br(),
       fluidRow(
           column(3,
-                 actionButton(inputId = "download_plot1", label = "download plot")
-          )#,
+                 downloadButton('downloadPlot1', 'Download')
+          ),
+          column(3,
+                 downloadButton('downloadPlot2', 'Download')
+          ),
+          column(3,
+                 downloadButton('downloadPlot3', 'Download')
+          )
           # column(4,
           #        plotOutput(outputId = "protein_abundance_plot6")
           # )
