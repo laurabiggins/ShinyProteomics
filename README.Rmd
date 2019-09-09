@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis build status](https://travis-ci.org/laurabiggins/ShinyProteomics.svg?branch=master)](https://travis-ci.org/laurabiggins/ShinyProteomics)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/laurabiggins/ShinyProteomics?branch=master&svg=true)](https://ci.appveyor.com/project/laurabiggins/ShinyProteomics)
 <!-- badges: end -->
 
 The goal of ShinyProteomics is to ...
@@ -33,7 +35,7 @@ install.packages("ShinyProteomics")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-library(ShinyProteomics)
+#library(ShinyProteomics)
 ## basic example code
 ```
 

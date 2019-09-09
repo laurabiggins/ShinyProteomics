@@ -42,7 +42,7 @@ devtools::build_vignettes()
 options(usethis.protocol = "https")
 usethis::use_github()
 usethis::use_travis()
-usethis::use_appveyor()
+#usethis::use_appveyor()
 
 # You're now set! 
 # go to dev/03_deploy.R

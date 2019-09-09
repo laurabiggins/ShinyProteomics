@@ -1,0 +1,19 @@
+.dataTables_filter {
+   float: left !important;
+   margin-bottom: 50px;
+   margin-left: 20px;
+   font-size: 30px;
+   text-align: left;
+}
+.dataTables_length{
+     float: right !important;
+}
+.dataTables_paginate{
+    font-size: 12px;
+}  
+.dataTables_info{
+     font-size: 12px;
+}
+/*.pull-left{
+float: left !important;
+} */

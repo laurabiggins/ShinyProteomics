@@ -10,3 +10,5 @@ golem::document_and_reload()
 
 # Run the application
 ShinyProteomics::run_app()
+
+
