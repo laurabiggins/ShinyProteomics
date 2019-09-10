@@ -16,21 +16,15 @@ app_ui <- function() {
       br(),
       h1("Plasma membrane profiling identifies differences in cell surface protein expression
 between naïve and primed human pluripotent stem cells"),
+      h3("Wojdyla et al."),
       br(),
-      h2("Wojdyla et al."),
-      br(),
-      actionButton("browser", "browser"),
-      br(),
+      #actionButton("browser", "browser"),
       br(),
       br(),
+      DT::dataTableOutput("mytable"),
       br(),
-      fluidRow(
-        column(1),
-        column(10,
-          DT::dataTableOutput("mytable")
-        )  
-      ),
-      br(),
+      downloadButton(outputId = "download_table",
+                     label = "Download Table"),
       br(),
       h3("Select up to 4 rows in the table to display plots"),
       br(),
@@ -55,17 +49,17 @@ between naïve and primed human pluripotent stem cells"),
       br(),
       fluidRow(
           column(3,
-                 downloadButton('downloadPlot1', 'Download')
+                 uiOutput("download_button_plot1")
           ),
           column(3,
-                 downloadButton('downloadPlot2', 'Download')
+                 uiOutput("download_button_plot2")
           ),
           column(3,
-                 downloadButton('downloadPlot3', 'Download')
+                 uiOutput("download_button_plot3")
+          ),
+           column(3,
+                  uiOutput("download_button_plot4")
           )
-          # column(4,
-          #        plotOutput(outputId = "protein_abundance_plot6")
-          # )
         )
       # br(),
       # fluidRow(

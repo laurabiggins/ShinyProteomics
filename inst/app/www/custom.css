@@ -1,6 +1,6 @@
 .dataTables_filter {
    float: left !important;
-   margin-bottom: 50px;
+   margin-bottom: 40px;
    margin-left: 20px;
    font-size: 30px;
    text-align: left;
@@ -15,8 +15,12 @@
      font-size: 12px;
 }
 h1{
-   color: #6c39b9;
+  /* color: #6c39b9;*/
 }
+.dataTable{
+   width: 60%;
+}
+
 /*.pull-left{
 float: left !important;
 } */
