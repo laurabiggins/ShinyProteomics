@@ -6,7 +6,6 @@ app_server <- function(input, output,session) {
     library(dplyr)
     library(DT)
 
-#!! try and look at renderCachedPlot to speed things up
 #p <- profvis::profvis({  
 #Rprof(filename = "Rprof.out", {  
     
