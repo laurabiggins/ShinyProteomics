@@ -1,5 +1,9 @@
 #' @import shiny
+
 app_ui <- function() {
+
+#  pr <- profvis::profvis({
+  
   tagList(
    
     # Leave this function for adding external resources
@@ -11,14 +15,18 @@ app_ui <- function() {
   #  tags$script(HTML("document.body.style.backgroundColor = 'skyblue';")),
   #  tags$script(HTML("$('.dataTables_filter').addClass('pull-left');")),
   #  tags$script(src = "script.js"),
-    fluidPage(
+
+  fluidPage(
+
       #tags$script(src = "script.js"),
       br(),
-      h1("Plasma membrane profiling identifies differences in cell surface protein expression
-between naïve and primed human pluripotent stem cells"),
-      h3("Wojdyla et al."),
+      h1("Cell surface proteome of human pluripotent states"),
       br(),
-      #actionButton("browser", "browser"),
+      h4("Plasma membrane profiling identifies differences in cell surface protein expression 
+         between naïve and primed human pluripotent stem cells"),
+      h4("Wojdyla et al."),
+      br(),
+      actionButton("browser", "browser"),
       br(),
       br(),
       DT::dataTableOutput("mytable"),
@@ -40,7 +48,7 @@ between naïve and primed human pluripotent stem cells"),
                plotOutput(outputId = "protein_abundance_plot2", height = "300px")
         ),
         column(3,
-               plotOutput(outputId = "protein_abundance_plot3", height = "300px")
+              plotOutput(outputId = "protein_abundance_plot3", height = "300px")
         ),
         column(3,
                plotOutput(outputId = "protein_abundance_plot4", height = "300px")
@@ -70,9 +78,11 @@ between naïve and primed human pluripotent stem cells"),
       #   column(4,
       #          plotOutput(outputId = "protein_abundance_plot6")
       #   )
-      # )  
-    )  
+      # )
   )
+    )
+ #   })
+#htmlwidgets::saveWidget(pr, "profile_ui.html")  
 }
 
 #' @import shiny
