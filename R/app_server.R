@@ -6,13 +6,13 @@ app_server <- function(input, output,session) {
     library(dplyr)
     library(DT)
 
-#p <- profvis::profvis({  
-#Rprof(filename = "Rprof.out", {  
-    
 custom_bar_plot <- function(dataset, selected_gene){
         
-        filtered <- dplyr::filter(dataset, Gene == selected_gene) 
+        #filtered <- dplyr::filter(dataset, Gene == selected_gene)  # this is really slow!!
 
+        index <- dataset$Gene == selected_gene
+        filtered <- dataset[index,]
+        
         error_bar_max <- dplyr::mutate(filtered, error_max = mean+sd) %>%
             dplyr::pull(error_max)
         
@@ -258,7 +258,6 @@ custom_bar_plot <- function(dataset, selected_gene){
     })
     
     
-    
     # downloadHandler() takes two arguments, both functions.
     # The content function is passed a filename as an argument, and
     #   it should write out data to that filename.
@@ -271,8 +270,5 @@ custom_bar_plot <- function(dataset, selected_gene){
         write.csv(gene_information[input[["mytable_rows_all"]], ], file)
       }
     )
-#})
-#p_output <- profvis::profvis(prof_input = "Rprof.out")
-#htmlwidgets::saveWidget(p_output, "profile_server.html")
 }
 
