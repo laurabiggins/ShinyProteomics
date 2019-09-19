@@ -2,8 +2,7 @@
 
 app_ui <- function() {
 
-#  pr <- profvis::profvis({
-  
+
   tagList(
    
     # Leave this function for adding external resources
