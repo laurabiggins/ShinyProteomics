@@ -8,10 +8,10 @@ app_server <- function(input, output,session) {
 
 custom_bar_plot <- function(dataset, selected_gene){
         
-        #filtered <- dplyr::filter(dataset, Gene == selected_gene)  # this is really slow!!
+        filtered <- dplyr::filter(dataset, Gene == selected_gene)
 
-        index <- dataset$Gene == selected_gene
-        filtered <- dataset[index,]
+        #index <- dataset$Gene == selected_gene
+        #filtered <- dataset[index,]
         
         error_bar_max <- dplyr::mutate(filtered, error_max = mean+sd) %>%
             dplyr::pull(error_max)

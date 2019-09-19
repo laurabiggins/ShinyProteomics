@@ -36,7 +36,8 @@ Wojdyla_data_tidy  <- raw_data %>%
     gather(`NAIVE_R1`,`NAIVE_R2`,`NAIVE_R3`,`PRIMED_A1`,`PRIMED_A2`,`PRIMED_E1`,`PRIMED_E2`, key = "sample", value = "expression") %>%
     separate(sample, into = c("type", "rep")) %>%
     group_by(Gene, type) %>%
-    summarise(mean = mean(expression), sd = sd(expression))
+    summarise(mean = mean(expression), sd = sd(expression)) %>%
+    ungroup()
 
 
 # all_genes <- (Wojdyla_data %>%
