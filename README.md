@@ -7,10 +7,6 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Travis build
-status](https://travis-ci.org/laurabiggins/ShinyProteomics.svg?branch=master)](https://travis-ci.org/laurabiggins/ShinyProteomics)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/laurabiggins/ShinyProteomics?branch=master&svg=true)](https://ci.appveyor.com/project/laurabiggins/ShinyProteomics)
 <!-- badges: end -->
 
 The goal of ShinyProteomics is to …
@@ -22,6 +18,13 @@ You can install the released version of ShinyProteomics from
 
 ``` r
 install.packages("ShinyProteomics")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("laurabiggins/ShinyProteomics")
 ```
 
 ## Example

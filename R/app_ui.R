@@ -6,14 +6,10 @@ app_ui <- function() {
   tagList(
    
     # Leave this function for adding external resources
+    golem::favicon(ico = "www/favicon.png"),
     golem_add_external_resources(),
       tags$link(rel="stylesheet", type="text/css", href="www/custom.css"),
-      tags$head(tags$script(src="www/script.js")),
-     # tags$head(tags$script(src="script.js")),
-    # List the first level UI elements here 
-  #  tags$script(HTML("document.body.style.backgroundColor = 'skyblue';")),
-  #  tags$script(HTML("$('.dataTables_filter').addClass('pull-left');")),
-  #  tags$script(src = "script.js"),
+      tags$script(src = "www/script.js"),
 
   fluidPage(
 
