@@ -203,8 +203,6 @@ custom_bar_plot <- function(dataset, selected_gene){
                           "}")
                       ),
                       list(
-                        #targets = c(4,5),
-                        #width = c("400px", "50px")
                         targets = c(3,4),
                         width = "300px"
                       ),
