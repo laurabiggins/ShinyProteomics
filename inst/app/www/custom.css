@@ -1,0 +1,43 @@
+.dataTables_filter {
+   float: left !important;
+   margin-bottom: 30px;
+   margin-left: 10px;
+   font-size: 30px;
+   text-align: left;
+}
+/* this does work
+.dataTables_filter:after {
+   content:"   Enter gene name, protein name, gene ontology term etc";
+   font-size: 20px;
+}
+*/
+.dataTables_length{
+     float: right !important;
+}
+.dataTables_paginate{
+    font-size: 12px;
+}  
+.dataTables_info{
+     font-size: 12px;
+}
+/*
+#mytable{
+   background-color: #337ab729;
+   padding: 50px;
+}*/
+.table_area{
+   background-color: #337ab729;
+   padding: 30px;
+}
+.title_block{
+    background-color: #b4d4cd;
+    padding: 30px;
+}
+.plots{
+    background-color: #b4d4cd;
+    padding: 30px;
+}
+/*.h1, .h2, .h3, .h4, h1, h2, h3, h4{
+   margin-left: 10px;
+}
+*/
