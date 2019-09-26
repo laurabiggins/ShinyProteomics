@@ -21,6 +21,7 @@ gene_information <- raw_data %>%
     select(-starts_with("PRIMED"))
 
 gene_information <- rename(gene_information, "log2 fold change" = "log2_fc naive primed")
+gene_information$`Pep Count` <- as.integer(gene_information$`Pep Count`)
 
 Wojdyla_data_tidy  <- raw_data %>%
     gather(`NAIVE_R1`,`NAIVE_R2`,`NAIVE_R3`,`PRIMED_A1`,`PRIMED_A2`,`PRIMED_E1`,`PRIMED_E2`, key = "sample", value = "expression") %>%
