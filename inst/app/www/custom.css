@@ -1,6 +1,6 @@
 .dataTables_filter {
    float: left !important;
-   margin-bottom: 30px;
+   margin-bottom: 20px;
    margin-left: 10px;
    font-size: 30px;
    text-align: left;
@@ -35,7 +35,9 @@
 }
 .plots{
     background-color: #b4d4cd;
-    padding: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
 }
 /*.h1, .h2, .h3, .h4, h1, h2, h3, h4{
    margin-left: 10px;

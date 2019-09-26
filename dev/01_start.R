@@ -55,7 +55,9 @@ golem::use_recommended_deps()
 # If you want to change the favicon (default is golem's one)
 golem::remove_favicon()
 #golem::use_favicon() # path = "path/to/ico". Can be an online file. 
-golem::use_favicon(path = "data/pic.png") 
+#golem::use_favicon(path = "data/pic.png") 
+golem::use_favicon(path = "data/pic_smaller.png") 
+#golem::use_favicon(path = "pic_smaller.png")
 
 # Add helper functions 
 golem::use_utils_ui()

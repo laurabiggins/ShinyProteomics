@@ -28,13 +28,10 @@ app_ui <- function() {
     ),
     #actionButton("browser", "browser"),
     br(),
-    #  br(),
-     # h5("Enter gene name, protein name, gene ontology term etc."),
     withTags(
       div(class="table_area",  
-        br(),
-        h4("Enter gene name, protein name, gene ontology term etc"),
-        p("Search across all fields in the box below or search in individual columns within the table"),
+        h4("Enter gene name, protein name, gene ontology term or other keyword"),
+        p("Search across all fields in the box below or use search boxes in individual columns within the table"),
         br(),
         div(id="search_and_table"),
         DT::dataTableOutput("mytable"),
@@ -49,61 +46,60 @@ app_ui <- function() {
           column(2,
                  actionButton(inputId = "clear_plots", label = "Clear selected rows")
           )
-        ),         
-        br()
+        )#,         
+       # br()
       )
     ), 
     br(),
     withTags(
       div(class="plots", 
-        h3("Select up to 4 rows in the table to display plots")#,
-       # br(),
-       # actionButton(inputId = "clear_plots", label = "Clear plots"),
-       # br()
+        h3("Select up to 6 rows in the table to display plots")
       )
     ), 
     br(),
       fluidRow(
-        column(3,
-               plotOutput(outputId = "protein_abundance_plot1", height = "300px")
+        column(2,
+               plotOutput(outputId = "protein_abundance_plot1", height = "240px")
         ),
-        column(3,
-               plotOutput(outputId = "protein_abundance_plot2", height = "300px")
+        column(2,
+               plotOutput(outputId = "protein_abundance_plot2", height = "240px")
         ),
-        column(3,
-               plotOutput(outputId = "protein_abundance_plot3", height = "300px")
+        column(2,
+               plotOutput(outputId = "protein_abundance_plot3", height = "240px")
         ),
-        column(3,
-               plotOutput(outputId = "protein_abundance_plot4", height = "300px")
+        column(2,
+               plotOutput(outputId = "protein_abundance_plot4", height = "240px")
+        ),
+        column(2,
+               plotOutput(outputId = "protein_abundance_plot5", height = "240px")
+        ),
+        column(2,
+               plotOutput(outputId = "protein_abundance_plot6", height = "240px")
         )
       ),
       br(),
       fluidRow(
-          column(3,
+          column(2,
                  uiOutput("download_button_plot1")
           ),
-          column(3,
+          column(2,
                  uiOutput("download_button_plot2")
           ),
-          column(3,
+          column(2,
                  uiOutput("download_button_plot3")
           ),
-           column(3,
-                  uiOutput("download_button_plot4")
+          column(2,
+                 uiOutput("download_button_plot4")
+          ),
+          column(2,
+                 uiOutput("download_button_plot5")
+          ),
+          column(2,
+                 uiOutput("download_button_plot6")
           )
         ),
       br(),
       br(),
-      # br(),
-      # fluidRow(
-      #  
-      #   column(4,
-      #          plotOutput(outputId = "protein_abundance_plot5")
-      #   ),
-      #   column(4,
-      #          plotOutput(outputId = "protein_abundance_plot6")
-      #   )
-      # )
     p("Paper citation details")
   )
   )

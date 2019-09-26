@@ -8,10 +8,12 @@ app_server <- function(input, output,session) {
 
   significance <- function(q_value){
     case_when(
-      q_value > 0.05 ~ "",
+      q_value > 0.05 ~ "NS",
       q_value > 0.01 ~ "*",
       q_value > 0.001 ~ "**",
-      q_value <= 0.001 ~ "***"
+      q_value > 0.0001 ~ "***",
+      q_value <= 0.0001 ~ "****",
+      
     )
   }
   
@@ -32,6 +34,8 @@ app_server <- function(input, output,session) {
         #q_text <- paste0("q = ", q_value)
         q_text <- significance(q_value)
         
+        q_size <- if_else(q_text == "NS", 6, 10)
+        
         segment_position <- max(error_bar_max)*1.1
         
         y_max <- max(error_bar_max)*1.3
@@ -44,14 +48,14 @@ app_server <- function(input, output,session) {
             theme(plot.title = element_text(size=20, face="bold"), 
                   legend.position = "none", 
                   axis.title.y = element_text(size=14, face="bold"), 
-                  axis.text.x = element_text(size=14, face="bold")
+                  axis.text.x = element_text(size=10, face="bold")
                  ) +
             scale_fill_manual(values=c('#3e5b7c','#bd1e15')) +
             scale_y_continuous(expand = c(0, 0), limits = c(0, y_max), labels = scales::scientific) +
             xlab("") +
             ylab("Protein abundance") +
             geom_segment(aes(x = 1.2, y = segment_position, xend = 1.8, yend = segment_position), size = 1.5) +
-            geom_text(x = 1.5, y = segment_position*1.1, label = q_text, size = 6)
+            geom_text(x = 1.5, y = segment_position*1.1, label = q_text, size = q_size)
             
   }
     
@@ -112,6 +116,30 @@ app_server <- function(input, output,session) {
     }, cacheKeyExpr = {list(input$mytable_rows_selected[4])}, bg = NA)
     
     
+    output$protein_abundance_plot5 <- renderCachedPlot({
+      
+      gene <- highlightedGene5()
+      
+      if(is.null(gene)) return (NULL)
+      if(!length(gene)) return (NULL)
+      if(is.na(gene))   return(NULL)
+      
+      custom_bar_plot(Wojdyla_data_tidy, gene)
+      
+    }, cacheKeyExpr = {list(input$mytable_rows_selected[5])}, bg = NA)
+    
+    
+    output$protein_abundance_plot6 <- renderCachedPlot({
+      
+      gene <- highlightedGene6()
+      
+      if(is.null(gene)) return (NULL)
+      if(!length(gene)) return (NULL)
+      if(is.na(gene))   return(NULL)
+      
+      custom_bar_plot(Wojdyla_data_tidy, gene)
+      
+    }, cacheKeyExpr = {list(input$mytable_rows_selected[6])}, bg = NA)
     
 
     
@@ -171,23 +199,35 @@ app_server <- function(input, output,session) {
        }  
      })
      
-    # 
-    # highlightedGene <- reactive({
-    # 
-    #   highlighted <- input$mytable_rows_selected
-    # 
-    #  # if(length(highlighted) == 3) browser()
-    # 
-    #   if(length(highlighted)){
-    #    # highlightedRows <- 1:nrow(gene_information) %in% highlighted
-    #     #return(gene_information[highlightedRows,]$Gene)
-    #     return(gene_information[highlighted,]$Gene)
-    #   }
-    #   else {
-    #     return(NULL)
-    #   }
-    # })
-    # 
+     highlightedGene5 <- reactive({
+       
+       row_no <- input$mytable_rows_selected[5]
+       
+       if(length(row_no)){
+         if (!is.na(row_no)){
+           return(gene_information[row_no,]$Gene)
+         } else{
+           return(NULL)  
+         } 
+       }else{
+         return(NULL)
+       }  
+     })
+     
+     highlightedGene6 <- reactive({
+       
+       row_no <- input$mytable_rows_selected[6]
+       
+       if(length(row_no)){
+         if (!is.na(row_no)){
+           return(gene_information[row_no,]$Gene)
+         } else{
+           return(NULL)  
+         } 
+       }else{
+         return(NULL)
+       }  
+     })
 
     output$mytable <- DT::renderDataTable({
       
@@ -196,14 +236,14 @@ app_server <- function(input, output,session) {
       
       datatable(table_data, escape = FALSE, 
                   filter = list(
-                      position = "top", 
-                      plain = TRUE#,
+                      position = "top"#, 
+                      #plain = TRUE#,
                       #clear = FALSE
                   ),
                   options = list(
                       dom = 'fltip', 
                       lengthMenu = c(5, 10, 20, 50), 
-                      pageLength = 8,
+                      pageLength = 10,
                       #autoWidth = TRUE,
                       columnDefs = list(list(
                         targets = c(3,4),
@@ -268,6 +308,8 @@ app_server <- function(input, output,session) {
     output$downloadPlot2 <- customDownloadHandler(highlightedGene2())
     output$downloadPlot3 <- customDownloadHandler(highlightedGene3())
     output$downloadPlot4 <- customDownloadHandler(highlightedGene4())
+    output$downloadPlot5 <- customDownloadHandler(highlightedGene5())
+    output$downloadPlot6 <- customDownloadHandler(highlightedGene6())
 
     
     output$download_button_plot1 <- renderUI({
@@ -299,6 +341,22 @@ app_server <- function(input, output,session) {
       if(length(highlightedGene4())){
       
         downloadButton('downloadPlot4', 'Download')
+      }
+    })
+    
+    output$download_button_plot5 <- renderUI({
+      
+      if(length(highlightedGene5())){
+        
+        downloadButton('downloadPlot5', 'Download')
+      }
+    })
+    
+    output$download_button_plot6 <- renderUI({
+      
+      if(length(highlightedGene6())){
+        
+        downloadButton('downloadPlot6', 'Download')
       }
     })
     
