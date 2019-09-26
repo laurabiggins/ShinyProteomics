@@ -6,32 +6,52 @@ app_server <- function(input, output,session) {
     library(dplyr)
     library(DT)
 
-custom_bar_plot <- function(dataset, selected_gene){
+  significance <- function(q_value){
+    case_when(
+      q_value > 0.05 ~ "",
+      q_value > 0.01 ~ "*",
+      q_value > 0.001 ~ "**",
+      q_value <= 0.001 ~ "***"
+    )
+  }
+  
+  get_q_value <- function(selected_gene){
+    gene_information %>%
+      dplyr::filter(Gene == selected_gene) %>%
+      dplyr::pull(`q-value`)
+  }
+  
+  custom_bar_plot <- function(dataset, selected_gene){
         
         filtered <- dplyr::filter(dataset, Gene == selected_gene)
-
-        #index <- dataset$Gene == selected_gene
-        #filtered <- dataset[index,]
         
         error_bar_max <- dplyr::mutate(filtered, error_max = mean+sd) %>%
             dplyr::pull(error_max)
         
-        y_max <- max(error_bar_max)*1.1
+        q_value <- get_q_value(selected_gene)
+        #q_text <- paste0("q = ", q_value)
+        q_text <- significance(q_value)
         
-            ggplot(filtered, aes(x = type, y = mean, fill = type)) +
-                geom_bar(stat="identity", color = "black", lwd = 1.2) +
-                geom_errorbar(aes(ymin = mean, ymax = error_bar_max), lwd = 1.2, width = 0.3) +
-                ggtitle(selected_gene) +
-                theme_classic() +
-                theme(plot.title = element_text(size=20, face="bold"), 
-                      legend.position = "none", 
-                      axis.title.y = element_text(size=14, face="bold"), 
-                      axis.text.x = element_text(size=14, face="bold")
-                     ) +
-                scale_fill_manual(values=c('#3e5b7c','#bd1e15')) +
-                scale_y_continuous(expand = c(0, 0), limits = c(0, y_max), labels = scales::scientific) +
-                xlab("") +
-                ylab("Protein abundance")
+        segment_position <- max(error_bar_max)*1.1
+        
+        y_max <- max(error_bar_max)*1.3
+        
+        ggplot(filtered, aes(x = type, y = mean, fill = type)) +
+            geom_bar(stat="identity", color = "black", lwd = 1.2) +
+            geom_errorbar(aes(ymin = mean, ymax = error_bar_max), lwd = 1.2, width = 0.3) +
+            ggtitle(selected_gene) +
+            theme_classic() +
+            theme(plot.title = element_text(size=20, face="bold"), 
+                  legend.position = "none", 
+                  axis.title.y = element_text(size=14, face="bold"), 
+                  axis.text.x = element_text(size=14, face="bold")
+                 ) +
+            scale_fill_manual(values=c('#3e5b7c','#bd1e15')) +
+            scale_y_continuous(expand = c(0, 0), limits = c(0, y_max), labels = scales::scientific) +
+            xlab("") +
+            ylab("Protein abundance") +
+            geom_segment(aes(x = 1.2, y = segment_position, xend = 1.8, yend = segment_position), size = 1.5) +
+            geom_text(x = 1.5, y = segment_position*1.1, label = q_text, size = 6)
             
   }
     
@@ -177,8 +197,8 @@ custom_bar_plot <- function(dataset, selected_gene){
       datatable(table_data, escape = FALSE, 
                   filter = list(
                       position = "top", 
-                      plain = TRUE,
-                      clear = FALSE
+                      plain = TRUE#,
+                      #clear = FALSE
                   ),
                   options = list(
                       dom = 'fltip', 
@@ -212,22 +232,23 @@ custom_bar_plot <- function(dataset, selected_gene){
                       )
                       )
               )) %>%
-      formatStyle( 0, target= 'row',color = 'black', lineHeight='90%')
+      formatStyle( 0, target= 'row', color = 'black', lineHeight='90%')
     })
 
-    
-  #  options = list(
-  #    lengthMenu = c(5, 10, 20, 50), pageLength = 5, autoWidth = TRUE)
         
-    myProxy = dataTableProxy("mytable")
+    myProxy <- dataTableProxy("mytable")
     
     observeEvent(input$clear_plots, {
       
-      myProxy%>%
-        selectRows(selected = NULL)
+      selectRows(myProxy, selected = NULL)
       
     })
 
+    observeEvent(input$clear_filters, {
+      
+      clearSearch(myProxy)
+      
+    })
     
     customDownloadHandler <- function(gene){
 

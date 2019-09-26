@@ -39,18 +39,27 @@ app_ui <- function() {
         div(id="search_and_table"),
         DT::dataTableOutput("mytable"),
         br(),
-        downloadButton(outputId = "download_table",
-                       label = "Download Table"),
+        fluidRow(
+          column(3,
+                 downloadButton(outputId = "download_table", label = "Download Table")
+          ),
+          column(2,
+                 actionButton(inputId = "clear_filters", label = "Clear Filters")
+          ),
+          column(2,
+                 actionButton(inputId = "clear_plots", label = "Clear selected rows")
+          )
+        ),         
         br()
       )
     ), 
     br(),
     withTags(
       div(class="plots", 
-        h3("Select up to 4 rows in the table to display plots"),
-        br(),
-        actionButton("clear_plots", "clear_plots"),
-        br()
+        h3("Select up to 4 rows in the table to display plots")#,
+       # br(),
+       # actionButton(inputId = "clear_plots", label = "Clear plots"),
+       # br()
       )
     ), 
     br(),
