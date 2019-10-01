@@ -5,17 +5,10 @@ app_ui <- function() {
 
   tagList(
    
-    # Leave this function for adding external resources
-    #golem::favicon(ico = "www/favicon.png"),
     golem_add_external_resources(),
-     # tags$script(src = "www/script.js"),
-     # tags$link(rel="stylesheet", type="text/css", href="www/custom.css"),
-     # tags$script(src = "www/jquery-3.4.1.js"),
-     # tags$script(src = "www/datatables.min.js"),
-  
+
     fluidPage(
       br(),
-      #  tags$script(src = "script.js"),
       withTags(
         div(class="title_block",   
           h1("Cell surface proteome of human pluripotent states"),
@@ -26,7 +19,7 @@ app_ui <- function() {
           br()
         )
       ),
-      #actionButton("browser", "browser"),
+      #actionButton("browser", "browser"), # for debugging
       br(),
       withTags(
         div(class="table_area",  
