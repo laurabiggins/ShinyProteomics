@@ -92,7 +92,18 @@ app_ui <- function() {
       ),
       br(),
       br(),
-      p("Paper citation details")
+      p("Paper citation details"),
+      br()#,
+      # sliderTextUI("one"),
+      # sliderTextUI("two"),
+      # fluidRow(
+      #   column(2,
+      #          custom_barplotUI("protein_abundance_plot1.1")
+      #   ),
+      #   column(2,
+      #          custom_barplotUI("protein_abundance_plot2.1")
+      #   )
+      # )  
     )
   )
 }

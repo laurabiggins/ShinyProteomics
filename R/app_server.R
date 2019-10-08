@@ -1,11 +1,17 @@
 #' @import shiny
-app_server <- function(input, output,session) {
+app_server <- function(input, output, session) {
   # List the first level callModules here
     library(ggplot2)
     library(magrittr)
     library(dplyr)
     library(DT)
 
+  #callModule(sliderText, "one")
+ # callModule(sliderText, "two")
+  
+  #callModule(custom_barplot, "protein_abundance_plot1.1")
+ # callModule(custom_barplot, "protein_abundance_plot2.1")
+  
   significance <- function(q_value){
     case_when(
       q_value > 0.05 ~ "NS",
@@ -230,50 +236,18 @@ app_server <- function(input, output,session) {
      }  
    })
 
+
   output$mytable <- DT::renderDataTable({
     
-    table_data <- gene_information %>%
-      mutate(`Uniprot id` = paste0("<a href =", "\"https://www.uniprot.org/uniprot/", 
-                                   `Uniprot id`, "\">",`Uniprot id`, "</a>"))
-    
-    datatable(table_data, escape = FALSE, 
-                filter = list(
-                    position = "top"#, 
-                    #plain = TRUE#,
-                    #clear = FALSE
-                ),
-                options = list(
-                    dom = 'fltip', 
-                    lengthMenu = c(5, 10, 20, 50), 
-                    pageLength = 10,
-                    columnDefs = list(list(
-                      targets = c(3,4),
-                      render = JS(
-                        "function(data, type, row, meta) {",
-                        "return type === 'display' && data.length > 15 ?",
-                        "'<span title=\"' + data + '\">' + data.substr(0, 15) + '...</span>' : data;",
-                        "}")
-                    ),
-                    list(
-                      targets = 8,
-                      width = "800px",
-                      render = JS(
-                        "function(data, type, row, meta) {",
-                        "return type === 'display' && data.length > 30 ?",
-                        "'<span title=\"' + data + '\">' + data.substr(0, 30) + '...</span>' : data;",
-                        "}")
-                    ),
-                    list(
-                      targets = c(3,4),
-                      width = "300px"
-                    ),
-                    list(
-                      targets = 5,
-                      width = "50px"
-                    )
-                    )
-            )) %>%
-    formatStyle( 0, target= 'row', color = 'black', lineHeight='90%')
+   datatable(
+      gene_information, 
+      escape = FALSE,
+      filter = list(
+         position = "top"
+      ),
+      options = dt_options
+    ) %>%
+      formatStyle( 0, target= 'row', color = 'black', lineHeight='90%')
   })
 
   # creating a proxy so we use the functions available in dataTableProxy to clear
