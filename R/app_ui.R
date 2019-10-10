@@ -2,6 +2,7 @@
 
 app_ui <- function() {
 
+  #shinyjs::useShinyjs()
 
   tagList(
    
@@ -19,7 +20,7 @@ app_ui <- function() {
           br()
         )
       ),
-      #actionButton("browser", "browser"), # for debugging
+      actionButton("browser", "browser"), # for debugging
       br(),
       withTags(
         div(class="table_area",  
@@ -51,59 +52,61 @@ app_ui <- function() {
       br(),
       fluidRow(
         column(2,
-               plotOutput(outputId = "protein_abundance_plot1", height = "240px")
+               custom_barplotUI("protein_abundance_plot1.1")#,
+               # check the names etc!!!!!
+               #shinyjs::disable("protein_abundance_plot1.1-download_plot")  
         ),
         column(2,
-               plotOutput(outputId = "protein_abundance_plot2", height = "240px")
+               custom_barplotUI("protein_abundance_plot2.1")
         ),
         column(2,
-               plotOutput(outputId = "protein_abundance_plot3", height = "240px")
+                custom_barplotUI("protein_abundance_plot3.1")
         ),
         column(2,
-               plotOutput(outputId = "protein_abundance_plot4", height = "240px")
+                custom_barplotUI("protein_abundance_plot4.1")
         ),
         column(2,
-               plotOutput(outputId = "protein_abundance_plot5", height = "240px")
+                custom_barplotUI("protein_abundance_plot5.1")
         ),
         column(2,
-               plotOutput(outputId = "protein_abundance_plot6", height = "240px")
+                custom_barplotUI("protein_abundance_plot6.1")
         )
       ),
       br(),
-      fluidRow(
-        column(2,
-               uiOutput("download_button_plot1")
-        ),
-        column(2,
-               uiOutput("download_button_plot2")
-        ),
-        column(2,
-               uiOutput("download_button_plot3")
-        ),
-        column(2,
-               uiOutput("download_button_plot4")
-        ),
-        column(2,
-               uiOutput("download_button_plot5")
-        ),
-        column(2,
-               uiOutput("download_button_plot6")
-        )
-      ),
+      # fluidRow(
+      #   column(2,
+      #          uiOutput("download_button_plot1")
+      #   ),
+      #   column(2,
+      #          uiOutput("download_button_plot2")
+      #   ),
+      #   column(2,
+      #          uiOutput("download_button_plot3")
+      #   ),
+      #   column(2,
+      #          uiOutput("download_button_plot4")
+      #   ),
+      #   column(2,
+      #          uiOutput("download_button_plot5")
+      #   ),
+      #   column(2,
+      #          uiOutput("download_button_plot6")
+      #   )
+      # ),
       br(),
       br(),
       p("Paper citation details"),
       br()#,
-      # sliderTextUI("one"),
-      # sliderTextUI("two"),
-      # fluidRow(
-      #   column(2,
-      #          custom_barplotUI("protein_abundance_plot1.1")
-      #   ),
-      #   column(2,
-      #          custom_barplotUI("protein_abundance_plot2.1")
-      #   )
-      # )  
+      #sliderTextUI("one"),
+      #sliderTextUI("two"),
+      #fluidRow(
+     #   column(2,
+      #         custom_barplotUI("protein_abundance_plot1.1")
+      #  )#,
+       # column(2,
+       #        custom_barplotUI("protein_abundance_plot2.1")
+       # )
+     # )
     )
   )
 }
