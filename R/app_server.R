@@ -6,12 +6,12 @@ app_server <- function(input, output, session) {
     library(dplyr)
     library(DT)
 
-  #callModule(sliderText, "one")
-  #callModule(sliderText, "two")
-
-  #callModule(custom_barplot, "protein_abundance_plot1.1", Wojdyla_data_tidy, selected_gene = reactive(gene1))
- # callModule(custom_barplot, "protein_abundance_plot1.1", Wojdyla_data_tidy, gene_information, NA)
-  callModule(custom_barplot, "protein_abundance_plot3.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[1]))#selected_gene = selectedGenes[1])
+  callModule(custom_barplot, "protein_abundance_plot1.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[1]))
+  callModule(custom_barplot, "protein_abundance_plot2.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[2]))
+  callModule(custom_barplot, "protein_abundance_plot3.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[3]))
+  callModule(custom_barplot, "protein_abundance_plot4.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[4]))
+  callModule(custom_barplot, "protein_abundance_plot5.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[5]))
+  callModule(custom_barplot, "protein_abundance_plot6.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[6]))
   
   # for debugging
   observeEvent(input$browser,{
@@ -50,11 +50,10 @@ app_server <- function(input, output, session) {
     
   })
 
-  observeEvent(input$mytable_cell_clicked, {
-    
+  #observeEvent(input$mytable_cell_clicked, {
     #selectedGenes()  
     #selectedGenes2()  
-  })
+  #})
   
   observeEvent(input$downloadPlot1, {
     

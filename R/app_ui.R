@@ -2,10 +2,11 @@
 
 app_ui <- function() {
 
-  #shinyjs::useShinyjs()
+ # shinyjs::useShinyjs()
 
   tagList(
    
+    #shinyjs::useShinyjs(),
     golem_add_external_resources(),
 
     fluidPage(
@@ -72,6 +73,7 @@ app_ui <- function() {
                 custom_barplotUI("protein_abundance_plot6.1")
         )
       ),
+     # shinyjs::disable("protein_abundance_plot3.1-downloadPlot1"),
       br(),
       # fluidRow(
       #   column(2,

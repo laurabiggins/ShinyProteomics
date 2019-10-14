@@ -6,21 +6,28 @@ custom_barplotUI <- function(id){
   ns <- NS(id)
   
   tagList(
-    textOutput(ns("gene_name_for_title")),
+    #textOutput(ns("gene_name_for_title")),
     plotOutput(ns("my_barplot"), height = "240px"),
-    downloadButton(ns("downloadPlot1"))
+    #downloadButton(ns("downloadPlot1"))
     #uiOutput(ns("download_button_plot1")),
     #uiOutput(ns("download_button_plot1"))#,
-  #  downloadLink(ns("downloadPlot1"))
+    downloadLink(ns("downloadPlot1"))
   )
-  shinyjs::useShinyjs()
-  shinyjs::disable(ns("downloadPlot1"))  
+  #shinyjs::useShinyjs()
+  #shinyjs::disable(ns("downloadPlot1"))  
 }
+
+# I can't get the download link to dynamically appear and work properly.
+# Either it's there from the start and works properly once there's a plot, or it
+# appears when a gene is selected but then the download doesn't work.
+# The code looks like it should work, but the download handler doesn't get used, 
+# I don't know whether the module means it doesn't recognise this properly.
 
 
 customDownloadHandler <- function(dataset, gene){
-
+  
   downloadHandler(
+
     filename = function() {
       #browser()
       paste0(gene, ".png")
@@ -175,7 +182,6 @@ custom_barplot <- function(input, output, session, dataset, gene_information, in
   })
 
   
-
   output$downloadPlot1 <- customDownloadHandler(dataset, selected_gene())
   
   # output$downloadPlot1 <- downloadHandler(
