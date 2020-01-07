@@ -27,7 +27,7 @@ custom_barplotUI <- function(id){
 customDownloadHandler <- function(dataset, gene){
   
   downloadHandler(
-
+    
     filename = function() {
       #browser()
       paste0(gene, ".png")
@@ -64,19 +64,19 @@ get_q_value <- function(selected_gene){
 #   })
 # }
 #   # output$download_button_plot1 <- renderUI({
-  #   
-  #   if(!is.na(selected_gene)){
-  #        downloadButton('downloadPlot1', 'Download')
-  #   }
-  # })
-  
-  # if(is.na(selected_gene)){
-  #   shinyjs::disable(ns("download_plot"))
-  # 
-  # } else {
-  #   shinyjs::enable(ns("download_plot"))
-  #  output$download_plot <- customDownloadHandler(selected_gene)
-  #}
+#   
+#   if(!is.na(selected_gene)){
+#        downloadButton('downloadPlot1', 'Download')
+#   }
+# })
+
+# if(is.na(selected_gene)){
+#   shinyjs::disable(ns("download_plot"))
+# 
+# } else {
+#   shinyjs::enable(ns("download_plot"))
+#  output$download_plot <- customDownloadHandler(selected_gene)
+#}
 #}
 
 getGene <- function(index){ 
@@ -145,7 +145,7 @@ the_barplot <- function(dataset, the_gene){
   
 }
 
-  
+
 custom_barplot <- function(input, output, session, dataset, gene_information, index){ 
   
   selected_gene <- reactive({
@@ -155,32 +155,32 @@ custom_barplot <- function(input, output, session, dataset, gene_information, in
     getGene(index())
     
   })
-
+  
   output$gene_name_for_title <- renderText({
     
     if(is.na(selected_gene())) return (" ")
-       
+    
     selected_gene()   
   })
   
   output$download_button_plot1 <- renderUI({
-
+    
     if(!is.na(selected_gene())){
-        downloadLink('downloadPlot1', 'Download it')
+      downloadLink('downloadPlot1', 'Download it')
     }
   })
-    
-  output$my_barplot <- renderPlot({
   
+  output$my_barplot <- renderPlot({
+    
     the_gene <- selected_gene()
-
+    
     if(is.na(the_gene)){
       plot.new()
       return()
     }
     the_barplot(dataset, the_gene)
   })
-
+  
   
   output$downloadPlot1 <- customDownloadHandler(dataset, selected_gene())
   
@@ -198,16 +198,16 @@ custom_barplot <- function(input, output, session, dataset, gene_information, in
   #     ggsave(file, p, device = "png")
   #   }
   # )
-    
-    
- # output$download <- customDownloadHandler(dataset, selected_gene())
   
-   observeEvent(input$downloadPlot1, {
-     
-     browser()
-  #   customDownloadHandler(dataset, selected_gene())
-     
-   })
+  
+  # output$download <- customDownloadHandler(dataset, selected_gene())
+  
+  observeEvent(input$downloadPlot1, {
+    
+    browser()
+    #   customDownloadHandler(dataset, selected_gene())
+    
+  })
   
   # output$download <- function(x){
   # 
@@ -234,3 +234,6 @@ sliderText <- function(input, output, session){
     input$slider
   })
 }
+
+
+
