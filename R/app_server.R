@@ -1,23 +1,28 @@
 #' @import shiny
 app_server <- function(input, output, session) {
   # List the first level callModules here
-    library(ggplot2)
-    library(magrittr)
-    library(dplyr)
-    library(DT)
+  library(ggplot2)
+  library(magrittr)
+  library(dplyr)
+  library(DT)
 
-  callModule(custom_barplot, "protein_abundance_plot1.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[1]))
-  callModule(custom_barplot, "protein_abundance_plot2.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[2]))
-  callModule(custom_barplot, "protein_abundance_plot3.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[3]))
-  callModule(custom_barplot, "protein_abundance_plot4.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[4]))
-  callModule(custom_barplot, "protein_abundance_plot5.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[5]))
-  callModule(custom_barplot, "protein_abundance_plot6.1", Wojdyla_data_tidy, gene_information, reactive(input$mytable_rows_selected[6]))
-  
+  callModule(custom_barplot, "protein_abundance_plot1.1", Wojdyla_data_tidy, gene_information, reactive(selected_genes6()[1]))
+  callModule(custom_barplot, "protein_abundance_plot2.1", Wojdyla_data_tidy, gene_information, reactive(selected_genes6()[2]))
+  callModule(custom_barplot, "protein_abundance_plot3.1", Wojdyla_data_tidy, gene_information, reactive(selected_genes6()[3]))
+  callModule(custom_barplot, "protein_abundance_plot4.1", Wojdyla_data_tidy, gene_information, reactive(selected_genes6()[4]))
+  callModule(custom_barplot, "protein_abundance_plot5.1", Wojdyla_data_tidy, gene_information, reactive(selected_genes6()[5]))
+  callModule(custom_barplot, "protein_abundance_plot6.1", Wojdyla_data_tidy, gene_information, reactive(selected_genes6()[6]))
+
   # for debugging
   observeEvent(input$browser,{
       browser()
   })
   
+  getGene <- function(row_no){
+    gene_information[row_no,]$Gene
+  }
+  
+  selected_genes6 <- reactive(getGene(input$mytable_rows_selected))
 
   output$mytable <- DT::renderDataTable({
     
@@ -39,9 +44,7 @@ app_server <- function(input, output, session) {
   observeEvent(input$clear_plots, {
     
     selectRows(myProxy, selected = NULL)
-   # selectedGenes()
-    #selectedGenes2()
-    
+
   })
 
   observeEvent(input$clear_filters, {
@@ -50,69 +53,7 @@ app_server <- function(input, output, session) {
     
   })
 
-  #observeEvent(input$mytable_cell_clicked, {
-    #selectedGenes()  
-    #selectedGenes2()  
-  #})
-  
-  observeEvent(input$downloadPlot1, {
-    
-    browser()
-    
-  })
-  
-  
-  # selectedGenes2 <- reactive({
-  #   
-  #   row_numbers <- input$mytable_rows_selected[1:6]
-  #   
-  #   all6_genes <- gene_information[row_numbers,]$Gene
-  #   
-  #   callModule(custom_barplot_wrapper, "protein_abundance_plot1.1", Wojdyla_data_tidy, all6_genes[1])
-  #   callModule(custom_barplot_wrapper, "protein_abundance_plot2.1", Wojdyla_data_tidy, all6_genes[2])
-  #   callModule(custom_barplot_wrapper, "protein_abundance_plot3.1", Wojdyla_data_tidy, all6_genes[3])
-  #   callModule(custom_barplot_wrapper, "protein_abundance_plot4.1", Wojdyla_data_tidy, all6_genes[4])
-  # 
-  # })
-  
-  # selectedGenes <- reactiveValues({
-  #   
-  #   row_numbers <- input$mytable_rows_selected[1:6]
-  #   
-  #   gene_information[row_numbers,]$Gene
-  # })
-  
- # selectedGenes <- reactiveValues()
-  
-#  getGene <- function(index){ 
-    
-#    gene_information[index,]$Gene
-#  }
-  
-  
- # selectedGenes$gene1 <- getGene(input$mytable_rows_selected[1])
-  #selectedGenes$gene2 <- getGene(input$mytable_rows_selected[2])
-  
-  
 
-  
-  # gene1 <- reactive(selectedGenes()[1])
-  # gene2 <- reactive(selectedGenes()[2])
-  # gene3 <- reactive(selectedGenes()[3])
-  # 
-  
-#  plot1 <- reactive({  
-#    callModule(custom_barplot, "protein_abundance_plot1.1", Wojdyla_data_tidy, gene1())
-#  })
-  
-#  plot3 <- reactive({
-#    callModule(custom_barplot, "protein_abundance_plot3.1", Wojdyla_data_tidy, gene3())
-#  })  
-
-  
-  
-  
-  # 
   # downloadHandler() takes two arguments, both functions.
   # The content function is passed a filename as an argument, and
   #   it should write out data to that filename.
