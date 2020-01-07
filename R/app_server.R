@@ -6,12 +6,6 @@ app_server <- function(input, output, session) {
     library(dplyr)
     library(DT)
 
-  #callModule(sliderText, "one")
- # callModule(sliderText, "two")
-  
-  #callModule(custom_barplot, "protein_abundance_plot1.1")
- # callModule(custom_barplot, "protein_abundance_plot2.1")
-  
   significance <- function(q_value){
     case_when(
       q_value > 0.05 ~ "NS",
@@ -31,37 +25,37 @@ app_server <- function(input, output, session) {
   
   custom_bar_plot <- function(dataset, selected_gene){
         
-        filtered <- dplyr::filter(dataset, Gene == selected_gene)
-        
-        error_bar_max <- dplyr::mutate(filtered, error_max = mean+sd) %>%
-            dplyr::pull(error_max)
-        
-        q_value <- get_q_value(selected_gene)
-        #q_text <- paste0("q = ", q_value)
-        q_text <- significance(q_value)
-        
-        q_size <- if_else(q_text == "NS", 6, 10)
-        
-        segment_position <- max(error_bar_max)*1.1
-        
-        y_max <- max(error_bar_max)*1.3
-        
-        ggplot(filtered, aes(x = type, y = mean, fill = type)) +
-            geom_bar(stat="identity", color = "black", lwd = 1.2) +
-            geom_errorbar(aes(ymin = mean, ymax = error_bar_max), lwd = 1.2, width = 0.3) +
-            ggtitle(selected_gene) +
-            theme_classic() +
-            theme(plot.title = element_text(size=20, face="bold"), 
-                  legend.position = "none", 
-                  axis.title.y = element_text(size=14, face="bold"), 
-                  axis.text.x = element_text(size=10, face="bold")
-                 ) +
-            scale_fill_manual(values=c('#3e5b7c','#bd1e15')) +
-            scale_y_continuous(expand = c(0, 0), limits = c(0, y_max), labels = scales::scientific) +
-            xlab("") +
-            ylab("Protein abundance") +
-            geom_segment(aes(x = 1.2, y = segment_position, xend = 1.8, yend = segment_position), size = 1.5) +
-            geom_text(x = 1.5, y = segment_position*1.1, label = q_text, size = q_size)
+    filtered <- dplyr::filter(dataset, Gene == selected_gene)
+    
+    error_bar_max <- dplyr::mutate(filtered, error_max = mean+sd) %>%
+        dplyr::pull(error_max)
+    
+    q_value <- get_q_value(selected_gene)
+    #q_text <- paste0("q = ", q_value)
+    q_text <- significance(q_value)
+    
+    q_size <- if_else(q_text == "NS", 6, 10)
+    
+    segment_position <- max(error_bar_max)*1.1
+    
+    y_max <- max(error_bar_max)*1.3
+    
+    ggplot(filtered, aes(x = type, y = mean, fill = type)) +
+        geom_bar(stat="identity", color = "black", lwd = 1.2) +
+        geom_errorbar(aes(ymin = mean, ymax = error_bar_max), lwd = 1.2, width = 0.3) +
+        ggtitle(selected_gene) +
+        theme_classic() +
+        theme(plot.title = element_text(size=20, face="bold"), 
+              legend.position = "none", 
+              axis.title.y = element_text(size=14, face="bold"), 
+              axis.text.x = element_text(size=10, face="bold")
+             ) +
+        scale_fill_manual(values=c('#3e5b7c','#bd1e15')) +
+        scale_y_continuous(expand = c(0, 0), limits = c(0, y_max), labels = scales::scientific) +
+        xlab("") +
+        ylab("Protein abundance") +
+        geom_segment(aes(x = 1.2, y = segment_position, xend = 1.8, yend = segment_position), size = 1.5) +
+        geom_text(x = 1.5, y = segment_position*1.1, label = q_text, size = q_size)
             
   }
     
@@ -71,171 +65,69 @@ app_server <- function(input, output, session) {
   })
   
   
-  output$protein_abundance_plot1 <- renderCachedPlot({
+  output$protein_abundance_plot1 <- renderPlot({
 
-    gene <- highlightedGene1()
-
-    if(is.null(gene)) return (NULL)
-    if(!length(gene)) return (NULL)
-    if(is.na(gene))   return(NULL)
-    
-    custom_bar_plot(Wojdyla_data_tidy, gene)
-
-  }, cacheKeyExpr = {input$mytable_rows_selected[1]}, bg = NA)#cacheKeyExpr = {list(input$mytable_rows_selected[1])}, bg = NA)
-
-  
-  output$protein_abundance_plot2 <- renderCachedPlot({
-    
-    gene <- highlightedGene2()
-    
-    if(is.null(gene)) return (NULL)
-    if(!length(gene)) return (NULL)
-    if(is.na(gene))   return(NULL)
-    
-    custom_bar_plot(Wojdyla_data_tidy, gene)
-    
-  }, cacheKeyExpr = {list(input$mytable_rows_selected[2])}, bg = NA)
-  
-  
-  output$protein_abundance_plot3 <- renderCachedPlot({
-    
-    gene <- highlightedGene3()
-    
-    if(is.null(gene)) return (NULL)
-    if(!length(gene)) return (NULL)
-    if(is.na(gene))   return(NULL)
-    
-    custom_bar_plot(Wojdyla_data_tidy, gene)
-    
-  }, cacheKeyExpr = {list(input$mytable_rows_selected[3])}, bg = NA)
-  
-  
-  output$protein_abundance_plot4 <- renderCachedPlot({
-    
-    gene <- highlightedGene4()
-    
-    if(is.null(gene)) return (NULL)
-    if(!length(gene)) return (NULL)
-    if(is.na(gene))   return(NULL)
-    
-    custom_bar_plot(Wojdyla_data_tidy, gene)
-    
-  }, cacheKeyExpr = {list(input$mytable_rows_selected[4])}, bg = NA)
-  
-  
-  output$protein_abundance_plot5 <- renderCachedPlot({
-    
-    gene <- highlightedGene5()
-    
-    if(is.null(gene)) return (NULL)
-    if(!length(gene)) return (NULL)
-    if(is.na(gene))   return(NULL)
-    
-    custom_bar_plot(Wojdyla_data_tidy, gene)
-    
-  }, cacheKeyExpr = {list(input$mytable_rows_selected[5])}, bg = NA)
-  
-  
-  output$protein_abundance_plot6 <- renderCachedPlot({
-    
-    gene <- highlightedGene6()
-    
-    if(is.null(gene)) return (NULL)
-    if(!length(gene)) return (NULL)
-    if(is.na(gene))   return(NULL)
-    
-    custom_bar_plot(Wojdyla_data_tidy, gene)
-    
-  }, cacheKeyExpr = {list(input$mytable_rows_selected[6])}, bg = NA)
-  
-
-  
-   highlightedGene1 <- reactive({
-     
-     row_no <- input$mytable_rows_selected[1]
-    
-     if(length(row_no)){
-       return(gene_information[row_no,]$Gene)
-     }else{
-       return(NULL)
-     }  
+    req(rv$gene1) 
+    custom_bar_plot(Wojdyla_data_tidy, rv$gene1)
   })
 
-   highlightedGene2 <- reactive({
-     
-     row_no <- input$mytable_rows_selected[2]
-     
-     if(length(row_no)){
-       if (!is.na(row_no)){
-         return(gene_information[row_no,]$Gene)
-       } else{
-         return(NULL)  
-       } 
-     }else{
-       return(NULL)
-     }  
-   })
-   
-   highlightedGene3 <- reactive({
-     
-     row_no <- input$mytable_rows_selected[3]
-     
-     if(length(row_no)){
-       if (!is.na(row_no)){
-        return(gene_information[row_no,]$Gene)
-       } else{
-         return(NULL)  
-       } 
-     }else{
-       return(NULL)
-     }  
-   })
-   
-   highlightedGene4 <- reactive({
-     
-     row_no <- input$mytable_rows_selected[4]
-     
-     if(length(row_no)){
-       if (!is.na(row_no)){
-         return(gene_information[row_no,]$Gene)
-       } else{
-         return(NULL)  
-       } 
-     }else{
-       return(NULL)
-     }  
-   })
-   
-   highlightedGene5 <- reactive({
-     
-     row_no <- input$mytable_rows_selected[5]
-     
-     if(length(row_no)){
-       if (!is.na(row_no)){
-         return(gene_information[row_no,]$Gene)
-       } else{
-         return(NULL)  
-       } 
-     }else{
-       return(NULL)
-     }  
-   })
-   
-   highlightedGene6 <- reactive({
-     
-     row_no <- input$mytable_rows_selected[6]
-     
-     if(length(row_no)){
-       if (!is.na(row_no)){
-         return(gene_information[row_no,]$Gene)
-       } else{
-         return(NULL)  
-       } 
-     }else{
-       return(NULL)
-     }  
-   })
+  output$protein_abundance_plot2 <- renderPlot({
+    
+    req(rv$gene2)  
+    custom_bar_plot(Wojdyla_data_tidy, rv$gene2)
+  })
+  
+  output$protein_abundance_plot3 <- renderCachedPlot({
+      
+      req(rv$gene3) 
+      custom_bar_plot(Wojdyla_data_tidy, rv$gene3)
+      
+  }, cacheKeyExpr = {list(rv$gene3)}, bg = NA)
+  
+  output$protein_abundance_plot4 <- renderPlot({
+      
+      req(rv$gene4)  
+      custom_bar_plot(Wojdyla_data_tidy, rv$gene4)
+  })
+  
+  output$protein_abundance_plot5 <- renderPlot({
+      
+      req(rv$gene5) 
+      custom_bar_plot(Wojdyla_data_tidy, rv$gene5)
+  })
+  
+  output$protein_abundance_plot6 <- renderPlot({
+      
+      req(rv$gene6)  
+      custom_bar_plot(Wojdyla_data_tidy, rv$gene6)
+  })
+  
 
+  rv <- reactiveValues(
+      gene1 = NA,
+      gene2 = NA,
+      gene3 = NA,
+      gene4 = NA,
+      gene5 = NA,
+      gene6 = NA
+  )
+  
+  observeEvent(input$mytable_rows_selected, {
+      # rv$gene1 <- getGene(input$mytable_rows_selected[1])
+      # rv$gene2 <- getGene(input$mytable_rows_selected[2])
+      # rv$gene3 <- getGene(input$mytable_rows_selected[3])
+      # rv$gene4 <- getGene(input$mytable_rows_selected[4])
+      # rv$gene5 <- getGene(input$mytable_rows_selected[5])
+      # rv$gene6 <- getGene(input$mytable_rows_selected[6])
+      for(i in 1:6){
+        rv_name <- paste0("gene", i)
+        rv[[rv_name]] <- getGene(input$mytable_rows_selected[i])
+      }    
+  })
+  
+  getGene <- function(row_no){
+     gene_information[row_no,]$Gene
+  }
 
   output$mytable <- DT::renderDataTable({
     
@@ -257,7 +149,12 @@ app_server <- function(input, output, session) {
   observeEvent(input$clear_plots, {
     
     selectRows(myProxy, selected = NULL)
-    
+    rv$gene1 <- NA
+    rv$gene2 <- NA
+    rv$gene3 <- NA
+    rv$gene4 <- NA
+    rv$gene5 <- NA
+    rv$gene6 <- NA
   })
 
   observeEvent(input$clear_filters, {
@@ -280,60 +177,50 @@ app_server <- function(input, output, session) {
     )
   }
   
-  output$downloadPlot1 <- customDownloadHandler(highlightedGene1())
-  output$downloadPlot2 <- customDownloadHandler(highlightedGene2())
-  output$downloadPlot3 <- customDownloadHandler(highlightedGene3())
-  output$downloadPlot4 <- customDownloadHandler(highlightedGene4())
-  output$downloadPlot5 <- customDownloadHandler(highlightedGene5())
-  output$downloadPlot6 <- customDownloadHandler(highlightedGene6())
+  output$downloadPlot1 <- customDownloadHandler(rv$gene1)
+  output$downloadPlot2 <- customDownloadHandler(rv$gene2)
+  output$downloadPlot3 <- customDownloadHandler(rv$gene3)
+  output$downloadPlot4 <- customDownloadHandler(rv$gene4)
+  output$downloadPlot5 <- customDownloadHandler(rv$gene5)
+  output$downloadPlot6 <- customDownloadHandler(rv$gene6)
 
   
   output$download_button_plot1 <- renderUI({
-
-    if(length(highlightedGene1())){
+     
+      req(rv$gene1)
 
       downloadButton('downloadPlot1', 'Download')
-    }
   })
   
   output$download_button_plot2 <- renderUI({
     
-    if(length(highlightedGene2())){
+      req(rv$gene2)
     
       downloadButton('downloadPlot2', 'Download')
-    }
   })
   
   output$download_button_plot3 <- renderUI({
-    
-    if(length(highlightedGene3())){
-    
-      downloadButton('downloadPlot3', 'Download')
-    }
+
+    req(rv$gene3)
+    downloadButton('downloadPlot3', 'Download')
   })
-  
+
   output$download_button_plot4 <- renderUI({
-    
-    if(length(highlightedGene4())){
-    
-      downloadButton('downloadPlot4', 'Download')
-    }
+
+    req(rv$gene4)
+    downloadButton('downloadPlot4', 'Download')
   })
-  
+
   output$download_button_plot5 <- renderUI({
-    
-    if(length(highlightedGene5())){
-      
-      downloadButton('downloadPlot5', 'Download')
-    }
+
+    req(rv$gene5)
+    downloadButton('downloadPlot5', 'Download')
   })
-  
+
   output$download_button_plot6 <- renderUI({
-    
-    if(length(highlightedGene6())){
-      
-      downloadButton('downloadPlot6', 'Download')
-    }
+
+    req(rv$gene6)
+    downloadButton('downloadPlot6', 'Download')
   })
   
   

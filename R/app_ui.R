@@ -19,7 +19,7 @@ app_ui <- function() {
           br()
         )
       ),
-      #actionButton("browser", "browser"), # for debugging
+      actionButton("browser", "browser"), # for debugging
       br(),
       withTags(
         div(class="table_area",  
