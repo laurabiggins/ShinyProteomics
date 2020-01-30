@@ -7,8 +7,11 @@ app_ui <- function() {
   tagList(
    
     #shinyjs::useShinyjs(),
-    golem_add_external_resources(),
+   # golem_add_external_resources(),
 
+    tags$script(src = "www/script.js"),
+    tags$link(rel="stylesheet", type="text/css", href="www/custom.css"),
+    
     fluidPage(
       br(),
       withTags(
@@ -21,7 +24,7 @@ app_ui <- function() {
           br()
         )
       ),
-      actionButton("browser", "browser"), # for debugging
+     # actionButton("browser", "browser"), # for debugging
       br(),
       withTags(
         div(class="table_area",  
@@ -113,18 +116,18 @@ app_ui <- function() {
   )
 }
 
-#' @import shiny
-golem_add_external_resources <- function(){
-  
-  addResourcePath(
-    'www', system.file('app/www', package = 'ShinyProteomics')
-  )
- 
-  tags$head(
-    golem::activate_js(),
-    golem::favicon(ico = "www/favicon.png"),
-    tags$script(src = "www/script.js"),
-    tags$link(rel="stylesheet", type="text/css", href="www/custom.css")
-    # Or for example, you can add shinyalert::useShinyalert() here
-  )
-}
+#' #' @import shiny
+#' golem_add_external_resources <- function(){
+#'   
+#'   addResourcePath(
+#'     'www', system.file('app/www', package = 'ShinyProteomics')
+#'   )
+#'  
+#'   tags$head(
+#'     golem::activate_js(),
+#'     golem::favicon(ico = "www/favicon.png"),
+#'     tags$script(src = "www/script.js"),
+#'     tags$link(rel="stylesheet", type="text/css", href="www/custom.css")
+#'     # Or for example, you can add shinyalert::useShinyalert() here
+#'   )
+#' }
