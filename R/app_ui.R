@@ -7,10 +7,10 @@ app_ui <- function() {
   tagList(
    
     #shinyjs::useShinyjs(),
-   # golem_add_external_resources(),
+    golem_add_external_resources(),
 
-    tags$script(src = "www/script.js"),
-    tags$link(rel="stylesheet", type="text/css", href="www/custom.css"),
+    #tags$script(src = "www/script.js"),
+    #tags$link(rel="stylesheet", type="text/css", href="www/custom.css"),
     
     fluidPage(
       br(),
@@ -18,9 +18,9 @@ app_ui <- function() {
         div(class="title_block",   
           h1("Cell surface proteome of human pluripotent states"),
           br(),
-          h4("Plasma membrane profiling identifies differences in cell surface protein expression 
-             between naïve and primed human pluripotent stem cells"),
-          h4("Wojdyla et al."),
+          h4("Cell-surface proteomics identifies differences in signalling and adhesion 
+              protein expression between naive and primed human pluripotent stem cells"),
+          h4("Wojdyla et al., 2020"),
           br()
         )
       ),
@@ -100,7 +100,7 @@ app_ui <- function() {
       # ),
       br(),
       br(),
-      p("Paper citation details"),
+      p("Wojdyla et al., 2020"),
       br()#,
       #sliderTextUI("one"),
       #sliderTextUI("two"),
@@ -116,18 +116,23 @@ app_ui <- function() {
   )
 }
 
-#' #' @import shiny
-#' golem_add_external_resources <- function(){
-#'   
-#'   addResourcePath(
-#'     'www', system.file('app/www', package = 'ShinyProteomics')
-#'   )
-#'  
-#'   tags$head(
-#'     golem::activate_js(),
-#'     golem::favicon(ico = "www/favicon.png"),
-#'     tags$script(src = "www/script.js"),
-#'     tags$link(rel="stylesheet", type="text/css", href="www/custom.css")
-#'     # Or for example, you can add shinyalert::useShinyalert() here
-#'   )
-#' }
+#' @import shiny
+golem_add_external_resources <- function(){
+  
+#  addResourcePath(
+#    'www', system.file('app/www', package = 'ShinyProteomics')
+#  )
+ 
+   addResourcePath(
+    'www', "/data/private/shiny_scripts/Wojdyla/ShinyProteomics/inst/app/www"
+  )
+ 
+ 
+  tags$head(
+   # golem::activate_js(),
+    #golem::favicon(ico = "www/favicon.png"),
+    tags$script(src = "www/script.js"),
+    tags$link(rel="stylesheet", type="text/css", href="www/custom.css")
+    # Or for example, you can add shinyalert::useShinyalert() here
+  )
+}
