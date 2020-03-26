@@ -53,7 +53,6 @@ app_server <- function(input, output, session) {
     
   })
 
-
   # downloadHandler() takes two arguments, both functions.
   # The content function is passed a filename as an argument, and
   #   it should write out data to that filename.
