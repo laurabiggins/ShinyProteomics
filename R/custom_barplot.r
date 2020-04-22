@@ -6,7 +6,10 @@ custom_barplotUI <- function(id){
   
   tagList(
     plotOutput(ns("my_barplot"), height = "240px"),
-    uiOutput(ns("download_button_plot1"))
+      flowLayout(
+        uiOutput(ns("download_button_plot1")),
+        uiOutput(ns("download_button_plot2"))
+      )  
   )
 }
 
@@ -82,8 +85,21 @@ custom_barplot <- function(input, output, session, dataset, gene_information, se
   }, cacheKeyExpr = {list(selected_gene())}, bg = NA)
   
   
-  customDownloadHandler <- function(gene){
+  customDownloadHandler_pdf <- function(gene){
   
+    downloadHandler(
+      filename = function() {
+        paste0(gene, ".pdf")
+      },
+      content = function(file) {
+        p <- the_barplot(dataset, gene)
+        ggsave(file, p, device = "pdf")
+      }
+    )
+  }
+  
+  customDownloadHandler_png <- function(gene){
+    
     downloadHandler(
       filename = function() {
         paste0(gene, ".png")
@@ -95,13 +111,32 @@ custom_barplot <- function(input, output, session, dataset, gene_information, se
     )
   }
   
-  output$dP <- customDownloadHandler(selected_gene())
+  output$download_png <- customDownloadHandler_png(selected_gene())
  
   output$download_button_plot1 <- renderUI({
 
     req(selected_gene())
-    downloadButton(session$ns("dP"), "Download")
+    downloadButton(session$ns("download_png"), "png")
   })
+  
+  output$download_pdf <- customDownloadHandler_pdf(selected_gene())
+  
+  output$download_button_plot2 <- renderUI({
+    
+    req(selected_gene())
+    downloadButton(session$ns("download_pdf"), "pdf")
+  })
+  
+  # output$png_pdf_radio <- renderUI({
+  #   
+  #   req(selected_gene())
+  #   radioButtons(session$ns("plot_radio"), 
+  #                choices = c("png", "pdf"), 
+  #                selected = "png",
+  #                label = NULL)
+  # })
+  # 
+  # plot_type <- reactive(input$plot_radio)
     
 }
 
