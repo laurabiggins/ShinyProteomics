@@ -21,6 +21,7 @@ app_ui <- function() {
           h4("Cell-surface proteomics identifies differences in signalling and adhesion 
               protein expression between naive and primed human pluripotent stem cells"),
           h4("Wojdyla et al., 2020"),
+          a(href="https://www.cell.com/stem-cell-reports/fulltext/S2213-6711(20)30107-7", "link to paper"),
           br()
         )
       ),
@@ -100,18 +101,9 @@ app_ui <- function() {
       # ),
       br(),
       br(),
-      p("Wojdyla et al., 2020"),
-      br()#,
-      #sliderTextUI("one"),
-      #sliderTextUI("two"),
-      #fluidRow(
-     #   column(2,
-      #         custom_barplotUI("protein_abundance_plot1.1")
-      #  )#,
-       # column(2,
-       #        custom_barplotUI("protein_abundance_plot2.1")
-       # )
-     # )
+      #p("Wojdyla et al., 2020"),
+      a(href="https://www.cell.com/stem-cell-reports/fulltext/S2213-6711(20)30107-7", "Wojdyla et al., 2020"),
+      br()
     )
   )
 }
