@@ -2,16 +2,10 @@
 
 app_ui <- function() {
 
- # shinyjs::useShinyjs()
-
   tagList(
    
-    #shinyjs::useShinyjs(),
     golem_add_external_resources(),
-
-    #tags$script(src = "www/script.js"),
-    #tags$link(rel="stylesheet", type="text/css", href="www/custom.css"),
-    
+   
     fluidPage(
       br(),
       withTags(
@@ -20,8 +14,9 @@ app_ui <- function() {
           br(),
           h4("Cell-surface proteomics identifies differences in signalling and adhesion 
               protein expression between naive and primed human pluripotent stem cells"),
-          h4("Wojdyla et al., 2020"),
-          a(href="https://www.cell.com/stem-cell-reports/fulltext/S2213-6711(20)30107-7", "link to paper"),
+          p("Katarzyna Wojdyla, Amanda Collier, Charlene Fabian, Paola Nisi, Laura Biggins, David Oxley, Peter Rugg-Gunn"),
+          p(em("Stem Cell Reports,"), "2020"),
+          a(href="https://www.cell.com/stem-cell-reports/fulltext/S2213-6711(20)30107-7", "doi: 10.1016/j.stemcr.2020.03.017"),
           br()
         )
       ),
